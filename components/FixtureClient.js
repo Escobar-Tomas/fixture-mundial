@@ -3,21 +3,86 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation'; // 1. Agregamos esta importación
 import { Calendar, LayoutGrid, Trophy, Clock, ShieldAlert, ListOrdered, Zap } from 'lucide-react';
 
 const TEAM_TRANSLATIONS = {
-  "Brazil": "Brasil", "Spain": "España", "England": "Inglaterra", 
-  "Germany": "Alemania", "France": "Francia", "Netherlands": "Países Bajos", 
-  "Italy": "Italia", "United States": "Estados Unidos", "Mexico": "México", 
-  "Canada": "Canadá", "Japan": "Japón", "South Korea": "Corea del Sur", 
-  "Morocco": "Marruecos", "Croatia": "Croacia", "Switzerland": "Suiza", 
-  "Poland": "Polonia", "Belgium": "Bélgica", "Denmark": "Dinamarca", 
-  "Sweden": "Suecia", "Wales": "Gales", "Cameroon": "Camerún", 
-  "Senegal": "Senegal", "Saudi Arabia": "Arabia Saudita", "Iran": "Irán", 
-  "Ivory Coast": "Costa de Marfil", "New Zealand": "Nueva Zelanda"
+  // Anfitriones (Norteamérica)
+  "United States": "Estados Unidos",
+  "USA": "Estados Unidos",
+  "Mexico": "México",
+  "Canada": "Canadá",
+
+  // Sudamérica (CONMEBOL)
+  "Argentina": "Argentina",
+  "Brazil": "Brasil",
+  "Uruguay": "Uruguay",
+  "Colombia": "Colombia",
+  "Ecuador": "Ecuador",
+  "Paraguay": "Paraguay",
+
+  // Europa (UEFA)
+  "Spain": "España",
+  "England": "Inglaterra",
+  "Germany": "Alemania",
+  "France": "Francia",
+  "Netherlands": "Países Bajos",
+  "Portugal": "Portugal",
+  "Belgium": "Bélgica",
+  "Croatia": "Croacia",
+  "Switzerland": "Suiza",
+  "Austria": "Austria",
+  "Scotland": "Escocia",
+  "Norway": "Noruega",
+  "Sweden": "Suecia",
+  "Turkey": "Turquía",
+  "Türkiye": "Turquía",
+  "Czech Republic": "República Checa",
+  "Czechia": "República Checa",
+  "Bosnia and Herzegovina": "Bosnia y Herzegovina",
+
+  // Asia (AFC)
+  "Japan": "Japón",
+  "South Korea": "Corea del Sur",
+  "Korea Republic": "Corea del Sur",
+  "Iran": "Irán",
+  "IR Iran": "Irán",
+  "Saudi Arabia": "Arabia Saudita",
+  "Qatar": "Catar",
+  "Uzbekistan": "Uzbekistán",
+  "Jordan": "Jordania",
+  "Iraq": "Irak",
+  "Australia": "Australia", // Australia compite en la confederación asiática
+
+  // África (CAF)
+  "Morocco": "Marruecos",
+  "Senegal": "Senegal",
+  "Egypt": "Egipto",
+  "Tunisia": "Túnez",
+  "Algeria": "Argelia",
+  "South Africa": "Sudáfrica",
+  "Ivory Coast": "Costa de Marfil",
+  "Côte d'Ivoire": "Costa de Marfil",
+  "Ghana": "Ghana",
+  "Cape Verde": "Cabo Verde",
+  "Cabo Verde": "Cabo Verde",
+  "DR Congo": "R.D. del Congo",
+  "Congo DR": "R.D. del Congo",
+
+  // Centroamérica y Caribe (CONCACAF)
+  "Panama": "Panamá",
+  "Haiti": "Haití",
+  "Curaçao": "Curazao",
+  "Curacao": "Curazao",
+
+  // Oceanía (OFC)
+  "New Zealand": "Nueva Zelanda",
 };
 
 export default function FixtureClient({ initialMatches }) {
+
+  const router = useRouter(); // Inicializamos el router
+
   // Ahora iniciamos por defecto en los partidos del día
   const [activeTab, setActiveTab] = useState('TODAY'); 
   const [selectedGroup, setSelectedGroup] = useState('GROUP_A');
@@ -25,7 +90,15 @@ export default function FixtureClient({ initialMatches }) {
 
   useEffect(() => {
     setIsMounted(true);
-  }, []);
+
+    // Configurar un temporizador que refresque los datos de fondo cada 60 segundos (60000 milisegundos)
+    const intervalId = setInterval(() => {
+      router.refresh(); 
+    }, 60000);
+
+    // Limpiar el temporizador si el usuario sale del componente
+    return () => clearInterval(intervalId);
+  }, [router]);
 
   // --- FORMATEADORES Y TRADUCTORES ---
   const formatTime = (dateString) => {
