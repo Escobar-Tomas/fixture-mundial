@@ -22,7 +22,7 @@ export default function FixtureClient({ initialMatches }) {
     setIsMounted(true);
     const intervalId = setInterval(() => {
       router.refresh(); 
-    }, 60000);
+    }, 30000); // 30 segundos
     return () => clearInterval(intervalId);
   }, [router]);
 
@@ -113,8 +113,7 @@ export default function FixtureClient({ initialMatches }) {
         {/* 2. VISTA FASE DE GRUPOS */}
         {activeTab === 'GROUPS' && (
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="flex overflow-x-auto gap-3 pb-4 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
-              {availableGroups.map((group) => (
+            <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">              {availableGroups.map((group) => (
                 <button key={group} onClick={() => setSelectedGroup(group)} className={`shrink-0 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${selectedGroup === group ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 -translate-y-0.5' : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-300 hover:bg-blue-50/50'}`}>
                   {cleanGroupName(group)}
                 </button>
@@ -129,8 +128,7 @@ export default function FixtureClient({ initialMatches }) {
         {/* 3. VISTA TABLA DE POSICIONES */}
         {activeTab === 'STANDINGS' && (
           <div className="space-y-6 max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="flex overflow-x-auto gap-3 pb-4 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 justify-start md:justify-center">
-              {availableGroups.map((group) => (
+            <div className="flex overflow-x-auto gap-3 py-2 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-4 w-full">              {availableGroups.map((group) => (
                 <button key={group} onClick={() => setSelectedGroup(group)} className={`shrink-0 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${selectedGroup === group ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 -translate-y-0.5' : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-300 hover:bg-blue-50/50'}`}>
                   {cleanGroupName(group)}
                 </button>
