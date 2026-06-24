@@ -10,7 +10,7 @@ export default function MatchCard({ match }) {
   const isHomeWinner = currentStatus === 'FINISHED' && match.score?.fullTime?.home > match.score?.fullTime?.away;
   const isAwayWinner = currentStatus === 'FINISHED' && match.score?.fullTime?.away > match.score?.fullTime?.home;
   
-  const isLive = ['IN_PLAY', 'PAUSED', 'EXTRA_TIME', 'PENALTY_SHOOTOUT'].includes(currentStatus);
+  const isLive = ['IN_PLAY', 'LIVE', 'PLAYING', 'PAUSED', 'EXTRA_TIME', 'PENALTY_SHOOTOUT'].includes(currentStatus);
   const isUpcoming = currentStatus === 'TIMED' || currentStatus === 'SCHEDULED';
 
   return (

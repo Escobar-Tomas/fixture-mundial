@@ -1,5 +1,3 @@
-// utils/formatters.js
-
 export const TEAM_TRANSLATIONS = {
   "United States": "Estados Unidos", "USA": "Estados Unidos", "Mexico": "México", "Canada": "Canadá",
   "Argentina": "Argentina", "Brazil": "Brasil", "Uruguay": "Uruguay", "Colombia": "Colombia",
@@ -27,10 +25,19 @@ export const translateTeam = (englishName) => {
 export const translateStatus = (status) => {
   const safeStatus = status?.trim().toUpperCase() || 'SCHEDULED';
   const statuses = {
-    'FINISHED': 'Finalizado', 'IN_PLAY': 'En Vivo', 'PAUSED': 'Entretiempo',
-    'EXTRA_TIME': 'T. Extra', 'PENALTY_SHOOTOUT': 'Penales', 'TIMED': 'Programado', 
-    'SCHEDULED': 'Por definir', 'POSTPONED': 'Postergado', 'SUSPENDED': 'Suspendido',
-    'CANCELLED': 'Cancelado', 'AWARDED': 'Adjudicado'
+    'FINISHED': 'Finalizado', 
+    'IN_PLAY': 'En Vivo', 
+    'LIVE': 'En Vivo',           // <-- Nueva variante cubierta
+    'PLAYING': 'En Vivo',        // <-- Nueva variante cubierta
+    'PAUSED': 'Entretiempo',
+    'EXTRA_TIME': 'T. Extra', 
+    'PENALTY_SHOOTOUT': 'Penales', 
+    'TIMED': 'Programado', 
+    'SCHEDULED': 'Por definir', 
+    'POSTPONED': 'Postergado', 
+    'SUSPENDED': 'Suspendido',
+    'CANCELLED': 'Cancelado', 
+    'AWARDED': 'Adjudicado'
   };
   return statuses[safeStatus] || safeStatus;
 };
@@ -39,11 +46,13 @@ export const getStatusBadgeStyles = (status) => {
   const safeStatus = status?.trim().toUpperCase() || 'SCHEDULED';
   switch (safeStatus) {
     case 'IN_PLAY':
+    case 'LIVE':                 // <-- Nueva variante cubierta
+    case 'PLAYING':              // <-- Nueva variante cubierta
     case 'EXTRA_TIME':
     case 'PENALTY_SHOOTOUT':
       return 'bg-red-500 text-white animate-pulse shadow-sm shadow-red-500/40';
     case 'PAUSED':
-      return 'bg-amber-500 text-white'; 
+      return 'bg-amber-500 text-white shadow-sm shadow-amber-500/40'; 
     case 'FINISHED':
       return 'bg-slate-200 text-slate-600';
     case 'TIMED':

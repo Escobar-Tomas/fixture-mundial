@@ -10,8 +10,8 @@ async function getMatches() {
       headers: { 
         'X-Auth-Token': process.env.API_KEY_FOOTBALL 
       },
-      // Actualiza la info automáticamente cada 60 segundos
-      next: { revalidate: 60 } 
+      // Actualiza la info automáticamente cada 30 segundos
+      next: { revalidate: 30 } 
     });
 
     if (!res.ok) throw new Error('Error al conectar con la API');
